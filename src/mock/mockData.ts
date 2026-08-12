@@ -1,0 +1,900 @@
+import type { Employee, PayrollRecord, PayrollSettings, AuditLogItem, SalaryAdvance } from '../types/payroll';
+
+export const INITIAL_EMPLOYEES: Employee[] = [
+  {
+    id: 'EMP-1001',
+    name: 'Sok Dara',
+    photo: '/avatar_alex.jpg',
+    email: 'sok.dara@company.com.kh',
+    position: 'Web Developer',
+    department: 'Technology',
+    branch: 'Phnom Penh HQ',
+    employmentType: 'Full-Time',
+    baseSalary: 500,
+    currency: 'USD',
+    paymentMethod: 'ABA',
+    accountName: 'SOK DARA',
+    bankAccount: '000 123 456',
+    bankName: 'ABA Bank',
+    taxId: 'KH-8849101',
+    joinDate: '2023-01-15',
+    raiseHistory: [
+      { id: 'RH-1', oldSalary: 450, newSalary: 500, effectiveMonth: 'October 2026', reason: 'Annual Performance Review', date: '2026-10-01' }
+    ]
+  },
+  {
+    id: 'EMP-1002',
+    name: 'Chea Pisey',
+    photo: '/avatar_sarah.jpg',
+    email: 'chea.pisey@company.com.kh',
+    position: 'Senior Accountant',
+    department: 'Finance',
+    branch: 'Phnom Penh HQ',
+    employmentType: 'Full-Time',
+    baseSalary: 750,
+    currency: 'USD',
+    paymentMethod: 'ACLEDA',
+    accountName: 'CHEA PISEY',
+    bankAccount: '0100-29381-12',
+    bankName: 'ACLEDA Bank',
+    taxId: 'KH-7729102',
+    joinDate: '2022-05-10',
+    raiseHistory: []
+  },
+  {
+    id: 'EMP-1003',
+    name: 'Heng Vannak',
+    photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
+    email: 'heng.vannak@company.com.kh',
+    position: 'Operations Manager',
+    department: 'Operations',
+    branch: 'Sen Sok Branch',
+    employmentType: 'Full-Time',
+    baseSalary: 900,
+    currency: 'USD',
+    paymentMethod: 'ABA',
+    accountName: 'HENG VANNAK',
+    bankAccount: '001 992 381',
+    bankName: 'ABA Bank',
+    taxId: 'KH-5591032',
+    joinDate: '2021-03-01',
+    raiseHistory: []
+  },
+  {
+    id: 'EMP-1004',
+    name: 'Chan Sophea',
+    photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+    email: 'chan.sophea@company.com.kh',
+    position: 'HR Specialist',
+    department: 'Administration',
+    branch: 'Phnom Penh HQ',
+    employmentType: 'Full-Time',
+    baseSalary: 600,
+    currency: 'USD',
+    paymentMethod: 'Wing Bank',
+    accountName: 'CHAN SOPHEA',
+    bankAccount: '092 881 234',
+    bankName: 'Wing Bank',
+    taxId: 'KH-2219482',
+    joinDate: '2023-08-15',
+    raiseHistory: []
+  },
+  {
+    id: 'EMP-1005',
+    name: 'Kim Sreypov',
+    photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+    email: 'kim.sreypov@company.com.kh',
+    position: 'Sales Executive',
+    department: 'Sales',
+    branch: 'Toul Kork Branch',
+    employmentType: 'Full-Time',
+    baseSalary: 450,
+    currency: 'USD',
+    paymentMethod: 'Bakong / KHQR',
+    accountName: 'KIM SREYPOV',
+    bankAccount: 'sreypov@aba',
+    bankName: 'Bakong KHQR',
+    taxId: 'KH-3382910',
+    joinDate: '2024-01-10',
+    raiseHistory: []
+  },
+  {
+    id: 'EMP-1006',
+    name: 'Lim Sokha',
+    photo: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&auto=format&fit=crop&q=80',
+    email: 'lim.sokha@company.com.kh',
+    position: 'Customer Service Lead',
+    department: 'Customer Service',
+    branch: 'Siem Reap Branch',
+    employmentType: 'Full-Time',
+    baseSalary: 550,
+    currency: 'USD',
+    paymentMethod: 'Cash',
+    accountName: 'LIM SOKHA',
+    taxId: 'KH-7718293',
+    joinDate: '2022-11-20',
+    raiseHistory: []
+  },
+  {
+    id: 'EMP-1007',
+    name: 'Vannak Rith',
+    photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&auto=format&fit=crop&q=80',
+    email: 'vannak.rith@company.com.kh',
+    position: 'Senior Mobile Engineer',
+    department: 'Technology',
+    branch: 'Phnom Penh HQ',
+    employmentType: 'Full-Time',
+    baseSalary: 1100,
+    currency: 'USD',
+    paymentMethod: 'ABA',
+    accountName: 'VANNAK RITH',
+    bankAccount: '002 441 892',
+    bankName: 'ABA Bank',
+    taxId: 'KH-6628190',
+    joinDate: '2021-09-01',
+    raiseHistory: []
+  },
+  {
+    id: 'EMP-1008',
+    name: 'Keo Sros',
+    photo: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80',
+    email: 'keo.sros@company.com.kh',
+    position: 'Marketing Coordinator',
+    department: 'Marketing',
+    branch: 'Toul Kork Branch',
+    employmentType: 'Full-Time',
+    baseSalary: 480,
+    currency: 'USD',
+    paymentMethod: 'ABA',
+    accountName: 'KEO SROS',
+    bankAccount: '005 771 293',
+    bankName: 'ABA Bank',
+    taxId: 'KH-1182930',
+    joinDate: '2023-10-01',
+    raiseHistory: []
+  },
+  {
+    id: 'EMP-1009',
+    name: 'Meas Panha',
+    photo: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=150&auto=format&fit=crop&q=80',
+    email: 'meas.panha@company.com.kh',
+    position: 'Logistics Officer',
+    department: 'Operations',
+    branch: 'Sen Sok Branch',
+    employmentType: 'Full-Time',
+    baseSalary: 520,
+    currency: 'USD',
+    paymentMethod: 'ACLEDA',
+    accountName: 'MEAS PANHA',
+    bankAccount: '0120-88319-90',
+    bankName: 'ACLEDA Bank',
+    taxId: 'KH-8829104',
+    joinDate: '2023-04-12',
+    raiseHistory: []
+  },
+  {
+    id: 'EMP-1010',
+    name: 'Ouk Borith',
+    photo: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&auto=format&fit=crop&q=80',
+    email: 'ouk.borith@company.com.kh',
+    position: 'Branch Supervisor',
+    department: 'Operations',
+    branch: 'Siem Reap Branch',
+    employmentType: 'Full-Time',
+    baseSalary: 800,
+    currency: 'USD',
+    paymentMethod: 'ABA',
+    accountName: 'OUK BORITH',
+    bankAccount: '008 332 104',
+    bankName: 'ABA Bank',
+    taxId: 'KH-4481920',
+    joinDate: '2022-02-18',
+    raiseHistory: []
+  },
+  {
+    id: 'EMP-1011',
+    name: 'Rith Sovann',
+    photo: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&auto=format&fit=crop&q=80',
+    email: 'rith.sovann@company.com.kh',
+    position: 'Full Stack Developer',
+    department: 'Technology',
+    branch: 'Phnom Penh HQ',
+    employmentType: 'Full-Time',
+    baseSalary: 850,
+    currency: 'USD',
+    paymentMethod: 'Bakong / KHQR',
+    accountName: 'RITH SOVANN',
+    bankAccount: 'sovann@bakong',
+    bankName: 'Bakong KHQR',
+    taxId: 'KH-9918230',
+    joinDate: '2023-06-01',
+    raiseHistory: []
+  },
+  {
+    id: 'EMP-1012',
+    name: 'Nhem Sreynoch',
+    photo: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
+    email: 'nhem.sreynoch@company.com.kh',
+    position: 'Administrative Assistant',
+    department: 'Administration',
+    branch: 'Phnom Penh HQ',
+    employmentType: 'Full-Time',
+    baseSalary: 420,
+    currency: 'USD',
+    paymentMethod: 'ABA',
+    accountName: 'NHEM SREYNOCH',
+    bankAccount: '003 119 402',
+    bankName: 'ABA Bank',
+    taxId: 'KH-2291039',
+    joinDate: '2024-02-01',
+    raiseHistory: []
+  }
+];
+
+export const INITIAL_SALARY_ADVANCES: SalaryAdvance[] = [
+  {
+    id: 'ADV-101',
+    employeeId: 'EMP-1001',
+    employeeName: 'Sok Dara',
+    photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+    department: 'Technology',
+    branch: 'Phnom Penh HQ',
+    advanceAmount: 100,
+    requestDate: '2026-10-05',
+    reason: 'Emergency medical expense',
+    repaymentMethod: 'CUSTOM_INSTALLMENTS',
+    monthlyDeductionAmount: 50,
+    repaidAmount: 50,
+    remainingAmount: 50,
+    status: 'Partially Repaid',
+    history: [
+      { period: '2026-10', amount: 50, paidAt: '2026-10-25' }
+    ]
+  },
+  {
+    id: 'ADV-102',
+    employeeId: 'EMP-1005',
+    employeeName: 'Kim Sreypov',
+    photo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
+    department: 'Sales',
+    branch: 'Toul Kork Branch',
+    advanceAmount: 100,
+    requestDate: '2026-10-12',
+    reason: 'Family urgent need',
+    repaymentMethod: 'FULL_NEXT_PAYROLL',
+    monthlyDeductionAmount: 50,
+    repaidAmount: 0,
+    remainingAmount: 100,
+    status: 'Active',
+    history: []
+  }
+];
+
+export const DEFAULT_SETTINGS: PayrollSettings = {
+  payrollEnabled: true,
+  currency: 'USD',
+  exchangeRateKHR: 4100,
+  showSecondaryCurrency: true,
+  payrollFrequency: 'Monthly',
+  payDateDay: 28,
+  salaryBaseCalculation: 'EMPLOYEE_SCHEDULE',
+  calculateAbsenceDeductions: true,
+  calculateLateDeductions: true,
+  calculateEarlyLeaveDeductions: true,
+  includeApprovedOvertime: true,
+  overtimeNormalRate: 1.5,
+  overtimeRestDayRate: 2.0,
+  overtimeHolidayRate: 2.0,
+  taxOnSalaryEnabled: true,
+  taxResidentStatus: 'RESIDENT',
+  dependentSpouse: false,
+  dependentChildrenCount: 0,
+  nssfEnabled: true,
+  nssfEmployeeRate: 0.008,
+  nssfEmployerRate: 0.008,
+  nssfCeilingUSD: 300,
+  defaultPaymentMethod: 'ABA',
+  payslipShowAttendance: true,
+  payslipShowEmployerNSSF: true,
+  payslipShowSecondaryCurrency: true,
+  payslipShowPaymentMethod: true,
+  enableSalaryAdvances: true,
+  enableEmployeeLoans: true,
+  enableBonuses: true,
+  enableAllowances: true,
+  enableCommission: true
+};
+
+export const INITIAL_PAYROLL_RECORDS: PayrollRecord[] = [
+  {
+    id: 'PAY-202610-1001',
+    employeeId: 'EMP-1001',
+    period: '2026-10',
+    status: 'Ready',
+    paymentStatus: 'Unpaid',
+    baseSalary: 500,
+    currency: 'USD',
+    attendance: {
+      workingDays: 26,
+      daysWorked: 25,
+      presentDays: 25,
+      lateDays: 2,
+      absentDays: 0,
+      paidLeave: 1,
+      unpaidLeave: 0,
+      overtimeHours: 6.0,
+      earlyLeave: 0,
+      exceptionStatus: 'None'
+    },
+    earnings: [
+      { id: 'E-1', type: 'Base', title: 'Base Salary', amount: 500, isTaxable: true },
+      { id: 'E-2', type: 'Overtime', title: 'Overtime (6h @ 1.5x)', amount: 24.0, isTaxable: true },
+      { id: 'E-3', type: 'Allowance', title: 'Food Allowance', amount: 20.0, isTaxable: true },
+      { id: 'E-4', type: 'Allowance', title: 'Transportation', amount: 10.0, isTaxable: true },
+      { id: 'E-5', type: 'Bonus', title: 'Performance Bonus', amount: 30.0, isTaxable: true, isAdjustment: true, reason: 'Q3 Goal', addedBy: 'HR Admin' }
+    ],
+    deductions: [
+      { id: 'D-1', type: 'Late', title: 'Late Penalty (2 times)', amount: 2.0, reason: '2 late arrivals' },
+      { id: 'D-2', type: 'SalaryAdvance', title: 'Salary Advance Repayment', amount: 20.0, reason: 'Monthly repayment' },
+      { id: 'D-3', type: 'NSSF', title: 'NSSF Employee Contribution (Demo)', amount: 2.40 },
+      { id: 'D-4', type: 'Tax', title: 'Tax on Salary (Demo)', amount: 0.0 }
+    ],
+    nssfEmployee: 2.40,
+    nssfEmployer: 2.40,
+    taxOnSalary: 0.0,
+    grossPay: 584.0,
+    totalDeductions: 24.40,
+    netPay: 559.60,
+    isLocked: false,
+    isPublished: false,
+    paymentDetails: {
+      method: 'ABA',
+      accountName: 'SOK DARA',
+      accountNumber: '000 123 456',
+      bankName: 'ABA Bank'
+    },
+    notes: 'Standard payroll cycle with $20 advance deduction.',
+    revisions: [],
+    updatedAt: '2026-10-25 14:30'
+  },
+  {
+    id: 'PAY-202610-1002',
+    employeeId: 'EMP-1002',
+    period: '2026-10',
+    status: 'Approved',
+    paymentStatus: 'Unpaid',
+    baseSalary: 750,
+    currency: 'USD',
+    attendance: {
+      workingDays: 26,
+      daysWorked: 26,
+      presentDays: 26,
+      lateDays: 0,
+      absentDays: 0,
+      paidLeave: 0,
+      unpaidLeave: 0,
+      overtimeHours: 4.0,
+      earlyLeave: 0,
+      exceptionStatus: 'None'
+    },
+    earnings: [
+      { id: 'E-1', type: 'Base', title: 'Base Salary', amount: 750, isTaxable: true },
+      { id: 'E-2', type: 'Overtime', title: 'Overtime (4h @ 1.5x)', amount: 21.60, isTaxable: true },
+      { id: 'E-3', type: 'Allowance', title: 'Food Allowance', amount: 30.0, isTaxable: true }
+    ],
+    deductions: [
+      { id: 'D-1', type: 'NSSF', title: 'NSSF Employee Contribution (Demo)', amount: 2.40 },
+      { id: 'D-2', type: 'Tax', title: 'Tax on Salary (Demo)', amount: 15.0 }
+    ],
+    nssfEmployee: 2.40,
+    nssfEmployer: 2.40,
+    taxOnSalary: 15.0,
+    grossPay: 801.60,
+    totalDeductions: 17.40,
+    netPay: 784.20,
+    isLocked: false,
+    isPublished: false,
+    paymentDetails: {
+      method: 'ACLEDA',
+      accountName: 'CHEA PISEY',
+      accountNumber: '0100-29381-12',
+      bankName: 'ACLEDA Bank'
+    },
+    notes: 'Approved by Company Owner.',
+    revisions: [],
+    updatedAt: '2026-10-27 10:15'
+  },
+  {
+    id: 'PAY-202610-1003',
+    employeeId: 'EMP-1003',
+    period: '2026-10',
+    status: 'Published',
+    paymentStatus: 'Paid',
+    baseSalary: 900,
+    currency: 'USD',
+    attendance: {
+      workingDays: 26,
+      daysWorked: 26,
+      presentDays: 26,
+      lateDays: 0,
+      absentDays: 0,
+      paidLeave: 0,
+      unpaidLeave: 0,
+      overtimeHours: 0.0,
+      earlyLeave: 0,
+      exceptionStatus: 'None'
+    },
+    earnings: [
+      { id: 'E-1', type: 'Base', title: 'Base Salary', amount: 900, isTaxable: true },
+      { id: 'E-2', type: 'Allowance', title: 'Management Allowance', amount: 50.0, isTaxable: true }
+    ],
+    deductions: [
+      { id: 'D-1', type: 'NSSF', title: 'NSSF Employee Contribution (Demo)', amount: 2.40 },
+      { id: 'D-2', type: 'Tax', title: 'Tax on Salary (Demo)', amount: 22.50 }
+    ],
+    nssfEmployee: 2.40,
+    nssfEmployer: 2.40,
+    taxOnSalary: 22.50,
+    grossPay: 950.0,
+    totalDeductions: 24.90,
+    netPay: 925.10,
+    isLocked: true,
+    isPublished: true,
+    paidAt: '2026-10-28',
+    paymentDetails: {
+      method: 'ABA',
+      accountName: 'HENG VANNAK',
+      accountNumber: '001 992 381',
+      bankName: 'ABA Bank',
+      paymentRef: 'ABA-9920194',
+      paidDate: '2026-10-28'
+    },
+    notes: 'Paid via ABA Payroll transfer.',
+    revisions: [],
+    updatedAt: '2026-10-28 09:00'
+  },
+  {
+    id: 'PAY-202610-1004',
+    employeeId: 'EMP-1004',
+    period: '2026-10',
+    status: 'Needs Review',
+    paymentStatus: 'Unpaid',
+    baseSalary: 600,
+    currency: 'USD',
+    attendance: {
+      workingDays: 26,
+      daysWorked: 24,
+      presentDays: 24,
+      lateDays: 0,
+      absentDays: 2,
+      paidLeave: 0,
+      unpaidLeave: 2,
+      overtimeHours: 0.0,
+      earlyLeave: 0,
+      exceptionStatus: 'Unapproved Leave'
+    },
+    earnings: [
+      { id: 'E-1', type: 'Base', title: 'Base Salary', amount: 600, isTaxable: true }
+    ],
+    deductions: [
+      { id: 'D-1', type: 'Absence', title: '2 Absence Days Deduction', amount: 46.15, reason: 'Oct 12-13 Unexcused' },
+      { id: 'D-2', type: 'NSSF', title: 'NSSF Employee Contribution (Demo)', amount: 2.40 }
+    ],
+    nssfEmployee: 2.40,
+    nssfEmployer: 2.40,
+    taxOnSalary: 0.0,
+    grossPay: 600.0,
+    totalDeductions: 48.55,
+    netPay: 551.45,
+    isLocked: false,
+    isPublished: false,
+    paymentDetails: {
+      method: 'Wing Bank',
+      accountName: 'CHAN SOPHEA',
+      accountNumber: '092 881 234',
+      bankName: 'Wing Bank'
+    },
+    notes: '2 absence days require HR review.',
+    warnings: ['2 absence days require HR review before approval'],
+    revisions: [],
+    updatedAt: '2026-10-24 16:45'
+  },
+  {
+    id: 'PAY-202610-1005',
+    employeeId: 'EMP-1005',
+    period: '2026-10',
+    status: 'Ready',
+    paymentStatus: 'Unpaid',
+    baseSalary: 450,
+    currency: 'USD',
+    attendance: {
+      workingDays: 26,
+      daysWorked: 26,
+      presentDays: 26,
+      lateDays: 0,
+      absentDays: 0,
+      paidLeave: 0,
+      unpaidLeave: 0,
+      overtimeHours: 10.0,
+      earlyLeave: 0,
+      exceptionStatus: 'None'
+    },
+    earnings: [
+      { id: 'E-1', type: 'Base', title: 'Base Salary', amount: 450, isTaxable: true },
+      { id: 'E-2', type: 'Overtime', title: 'Overtime (10h @ 1.5x)', amount: 32.45, isTaxable: true },
+      { id: 'E-3', type: 'Commission', title: 'Sales Commission', amount: 80.0, isTaxable: true }
+    ],
+    deductions: [
+      { id: 'D-1', type: 'SalaryAdvance', title: 'Salary Advance Repayment', amount: 50.0, reason: 'Repayment for ADV-102' },
+      { id: 'D-2', type: 'NSSF', title: 'NSSF Employee Contribution (Demo)', amount: 2.40 }
+    ],
+    nssfEmployee: 2.40,
+    nssfEmployer: 2.40,
+    taxOnSalary: 0.0,
+    grossPay: 562.45,
+    totalDeductions: 52.40,
+    netPay: 510.05,
+    isLocked: false,
+    isPublished: false,
+    paymentDetails: {
+      method: 'Bakong / KHQR',
+      accountName: 'KIM SREYPOV',
+      accountNumber: 'sreypov@aba',
+      bankName: 'Bakong KHQR'
+    },
+    revisions: [],
+    updatedAt: '2026-10-20 11:00'
+  },
+  {
+    id: 'PAY-202610-1006',
+    employeeId: 'EMP-1006',
+    period: '2026-10',
+    status: 'Published',
+    paymentStatus: 'Paid',
+    baseSalary: 550,
+    currency: 'USD',
+    attendance: {
+      workingDays: 26,
+      daysWorked: 26,
+      presentDays: 26,
+      lateDays: 0,
+      absentDays: 0,
+      paidLeave: 0,
+      unpaidLeave: 0,
+      overtimeHours: 0.0,
+      earlyLeave: 0,
+      exceptionStatus: 'None'
+    },
+    earnings: [
+      { id: 'E-1', type: 'Base', title: 'Base Salary', amount: 550, isTaxable: true }
+    ],
+    deductions: [
+      { id: 'D-1', type: 'NSSF', title: 'NSSF Employee Contribution (Demo)', amount: 2.40 }
+    ],
+    nssfEmployee: 2.40,
+    nssfEmployer: 2.40,
+    taxOnSalary: 0.0,
+    grossPay: 550.0,
+    totalDeductions: 2.40,
+    netPay: 547.60,
+    isLocked: true,
+    isPublished: true,
+    paidAt: '2026-10-28',
+    paymentDetails: {
+      method: 'Cash',
+      accountName: 'LIM SOKHA',
+      cashNotes: 'Paid in cash at Siem Reap branch on Oct 28',
+      paidDate: '2026-10-28'
+    },
+    revisions: [],
+    updatedAt: '2026-10-28 10:00'
+  },
+  {
+    id: 'PAY-202610-1007',
+    employeeId: 'EMP-1007',
+    period: '2026-10',
+    status: 'Finalized',
+    paymentStatus: 'Processing',
+    baseSalary: 1100,
+    currency: 'USD',
+    attendance: {
+      workingDays: 26,
+      daysWorked: 26,
+      presentDays: 26,
+      lateDays: 0,
+      absentDays: 0,
+      paidLeave: 0,
+      unpaidLeave: 0,
+      overtimeHours: 8.0,
+      earlyLeave: 0,
+      exceptionStatus: 'None'
+    },
+    earnings: [
+      { id: 'E-1', type: 'Base', title: 'Base Salary', amount: 1100, isTaxable: true },
+      { id: 'E-2', type: 'Overtime', title: 'Overtime (8h @ 1.5x)', amount: 50.76, isTaxable: true },
+      { id: 'E-3', type: 'Bonus', title: 'Spot Bonus', amount: 50.0, isTaxable: true }
+    ],
+    deductions: [
+      { id: 'D-1', type: 'NSSF', title: 'NSSF Employee Contribution (Demo)', amount: 2.40 },
+      { id: 'D-2', type: 'Tax', title: 'Tax on Salary (Demo)', amount: 35.0 }
+    ],
+    nssfEmployee: 2.40,
+    nssfEmployer: 2.40,
+    taxOnSalary: 35.0,
+    grossPay: 1200.76,
+    totalDeductions: 37.40,
+    netPay: 1163.36,
+    isLocked: true,
+    isPublished: true,
+    paymentDetails: {
+      method: 'ABA',
+      accountName: 'VANNAK RITH',
+      accountNumber: '002 441 892',
+      bankName: 'ABA Bank'
+    },
+    revisions: [],
+    updatedAt: '2026-10-24 11:30'
+  },
+  {
+    id: 'PAY-202610-1008',
+    employeeId: 'EMP-1008',
+    period: '2026-10',
+    status: 'Draft',
+    paymentStatus: 'Unpaid',
+    baseSalary: 480,
+    currency: 'USD',
+    attendance: {
+      workingDays: 26,
+      daysWorked: 26,
+      presentDays: 26,
+      lateDays: 1,
+      absentDays: 0,
+      paidLeave: 0,
+      unpaidLeave: 0,
+      overtimeHours: 2.0,
+      earlyLeave: 0,
+      exceptionStatus: 'None'
+    },
+    earnings: [
+      { id: 'E-1', type: 'Base', title: 'Base Salary', amount: 480, isTaxable: true },
+      { id: 'E-2', type: 'Overtime', title: 'Overtime (2h @ 1.5x)', amount: 6.92, isTaxable: true }
+    ],
+    deductions: [
+      { id: 'D-1', type: 'Late', title: 'Late Penalty', amount: 1.0 },
+      { id: 'D-2', type: 'NSSF', title: 'NSSF Employee Contribution (Demo)', amount: 2.40 }
+    ],
+    nssfEmployee: 2.40,
+    nssfEmployer: 2.40,
+    taxOnSalary: 0.0,
+    grossPay: 486.92,
+    totalDeductions: 3.40,
+    netPay: 483.52,
+    isLocked: false,
+    isPublished: false,
+    paymentDetails: {
+      method: 'ABA',
+      accountName: 'KEO SROS',
+      accountNumber: '005 771 293',
+      bankName: 'ABA Bank'
+    },
+    revisions: [],
+    updatedAt: '2026-10-22 14:00'
+  },
+  {
+    id: 'PAY-202610-1009',
+    employeeId: 'EMP-1009',
+    period: '2026-10',
+    status: 'Needs Review',
+    paymentStatus: 'Unpaid',
+    baseSalary: 520,
+    currency: 'USD',
+    attendance: {
+      workingDays: 26,
+      daysWorked: 25,
+      presentDays: 24,
+      lateDays: 1,
+      absentDays: 1,
+      paidLeave: 0,
+      unpaidLeave: 1,
+      overtimeHours: 0.0,
+      earlyLeave: 0,
+      exceptionStatus: 'Missing Checkout'
+    },
+    earnings: [
+      { id: 'E-1', type: 'Base', title: 'Base Salary', amount: 520, isTaxable: true }
+    ],
+    deductions: [
+      { id: 'D-1', type: 'Absence', title: '1 Absence Day Deduction', amount: 20.0, reason: 'Oct 19 Unexcused' },
+      { id: 'D-2', type: 'NSSF', title: 'NSSF Employee Contribution (Demo)', amount: 2.40 }
+    ],
+    nssfEmployee: 2.40,
+    nssfEmployer: 2.40,
+    taxOnSalary: 0.0,
+    grossPay: 520.0,
+    totalDeductions: 22.40,
+    netPay: 497.60,
+    isLocked: false,
+    isPublished: false,
+    paymentDetails: {
+      method: 'ACLEDA',
+      accountName: 'MEAS PANHA',
+      accountNumber: '0120-88319-90',
+      bankName: 'ACLEDA Bank'
+    },
+    warnings: ['Missing checkout yesterday needs attendance verification'],
+    revisions: [],
+    updatedAt: '2026-10-23 09:15'
+  },
+  {
+    id: 'PAY-202610-1010',
+    employeeId: 'EMP-1010',
+    period: '2026-10',
+    status: 'Approved',
+    paymentStatus: 'Unpaid',
+    baseSalary: 800,
+    currency: 'USD',
+    attendance: {
+      workingDays: 26,
+      daysWorked: 26,
+      presentDays: 26,
+      lateDays: 0,
+      absentDays: 0,
+      paidLeave: 0,
+      unpaidLeave: 0,
+      overtimeHours: 5.0,
+      earlyLeave: 0,
+      exceptionStatus: 'None'
+    },
+    earnings: [
+      { id: 'E-1', type: 'Base', title: 'Base Salary', amount: 800, isTaxable: true },
+      { id: 'E-2', type: 'Overtime', title: 'Overtime (5h @ 1.5x)', amount: 28.85, isTaxable: true }
+    ],
+    deductions: [
+      { id: 'D-1', type: 'NSSF', title: 'NSSF Employee Contribution (Demo)', amount: 2.40 },
+      { id: 'D-2', type: 'Tax', title: 'Tax on Salary (Demo)', amount: 18.0 }
+    ],
+    nssfEmployee: 2.40,
+    nssfEmployer: 2.40,
+    taxOnSalary: 18.0,
+    grossPay: 828.85,
+    totalDeductions: 20.40,
+    netPay: 808.45,
+    isLocked: false,
+    isPublished: false,
+    paymentDetails: {
+      method: 'ABA',
+      accountName: 'OUK BORITH',
+      accountNumber: '008 332 104',
+      bankName: 'ABA Bank'
+    },
+    revisions: [],
+    updatedAt: '2026-10-25 16:00'
+  },
+  {
+    id: 'PAY-202610-1011',
+    employeeId: 'EMP-1011',
+    period: '2026-10',
+    status: 'Finalized',
+    paymentStatus: 'Unpaid',
+    baseSalary: 850,
+    currency: 'USD',
+    attendance: {
+      workingDays: 26,
+      daysWorked: 26,
+      presentDays: 26,
+      lateDays: 0,
+      absentDays: 0,
+      paidLeave: 0,
+      unpaidLeave: 0,
+      overtimeHours: 4.0,
+      earlyLeave: 0,
+      exceptionStatus: 'None'
+    },
+    earnings: [
+      { id: 'E-1', type: 'Base', title: 'Base Salary', amount: 850, isTaxable: true },
+      { id: 'E-2', type: 'Overtime', title: 'Overtime (4h @ 1.5x)', amount: 24.52, isTaxable: true }
+    ],
+    deductions: [
+      { id: 'D-1', type: 'NSSF', title: 'NSSF Employee Contribution (Demo)', amount: 2.40 },
+      { id: 'D-2', type: 'Tax', title: 'Tax on Salary (Demo)', amount: 20.0 }
+    ],
+    nssfEmployee: 2.40,
+    nssfEmployer: 2.40,
+    taxOnSalary: 20.0,
+    grossPay: 874.52,
+    totalDeductions: 22.40,
+    netPay: 852.12,
+    isLocked: true,
+    isPublished: true,
+    paymentDetails: {
+      method: 'Bakong / KHQR',
+      accountName: 'RITH SOVANN',
+      accountNumber: 'sovann@bakong',
+      bankName: 'Bakong KHQR'
+    },
+    revisions: [],
+    updatedAt: '2026-10-25 16:30'
+  },
+  {
+    id: 'PAY-202610-1012',
+    employeeId: 'EMP-1012',
+    period: '2026-10',
+    status: 'Draft',
+    paymentStatus: 'Unpaid',
+    baseSalary: 420,
+    currency: 'USD',
+    attendance: {
+      workingDays: 26,
+      daysWorked: 26,
+      presentDays: 26,
+      lateDays: 0,
+      absentDays: 0,
+      paidLeave: 0,
+      unpaidLeave: 0,
+      overtimeHours: 0.0,
+      earlyLeave: 0,
+      exceptionStatus: 'None'
+    },
+    earnings: [
+      { id: 'E-1', type: 'Base', title: 'Base Salary', amount: 420, isTaxable: true }
+    ],
+    deductions: [
+      { id: 'D-1', type: 'NSSF', title: 'NSSF Employee Contribution (Demo)', amount: 2.40 }
+    ],
+    nssfEmployee: 2.40,
+    nssfEmployer: 2.40,
+    taxOnSalary: 0.0,
+    grossPay: 420.0,
+    totalDeductions: 2.40,
+    netPay: 417.60,
+    isLocked: false,
+    isPublished: false,
+    paymentDetails: {
+      method: 'ABA',
+      accountName: 'NHEM SREYNOCH',
+      accountNumber: '003 119 402',
+      bankName: 'ABA Bank'
+    },
+    revisions: [],
+    updatedAt: '2026-10-21 10:00'
+  }
+];
+
+export const INITIAL_AUDIT_LOGS: AuditLogItem[] = [
+  {
+    id: 'AUD-901',
+    user: 'HR Admin',
+    userRole: 'HR_ADMIN',
+    action: 'Bonus Added',
+    targetId: 'PAY-202610-1001',
+    employeeName: 'Sok Dara',
+    oldValue: '$529.60',
+    newValue: '$559.60 (+$30 Performance Bonus)',
+    reason: 'Approved Q3 Goal achievement bonus',
+    timestamp: '2026-10-25 14:30:12'
+  },
+  {
+    id: 'AUD-902',
+    user: 'Company Owner',
+    userRole: 'COMPANY_OWNER',
+    action: 'Payroll Approved',
+    targetId: 'PAY-202610-1002',
+    employeeName: 'Chea Pisey',
+    oldValue: 'Ready',
+    newValue: 'Approved',
+    reason: 'Monthly payroll sign-off',
+    timestamp: '2026-10-27 10:15:00'
+  },
+  {
+    id: 'AUD-903',
+    user: 'Payroll Admin',
+    userRole: 'PAYROLL_ADMIN',
+    action: 'Payment Processed',
+    targetId: 'PAY-202610-1003',
+    employeeName: 'Heng Vannak',
+    oldValue: 'Approved',
+    newValue: 'Paid (ABA-9920194)',
+    reason: 'Processed ABA Payroll transfer',
+    timestamp: '2026-10-28 09:00:00'
+  }
+];

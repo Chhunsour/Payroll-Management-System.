@@ -1,32 +1,54 @@
-# React + TypeScript + Vite
+# Payroll Management System & Payslip Generator 💼
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+<p align="center">
+  <sub>Developed by <strong>Seng Chhunsour</strong></sub>
+</p>
 
-Currently, two official plugins are available:
+<p align="center">
+  <a href="https://github.com/Chhunsour"><img src="https://img.shields.io/badge/Author-Seng%20Chhunsour-FF5A1F?style=flat-square&logo=github&logoColor=white" alt="Author: Seng Chhunsour" /></a>
+  <img src="https://img.shields.io/badge/Framework-React%2019%20%7C%20Vite%208-blue?style=flat-square&logo=react&logoColor=white" alt="React 19" />
+  <img src="https://img.shields.io/badge/Database-Dexie.js%20(IndexedDB)-3ECF8E?style=flat-square" alt="Dexie" />
+  <img src="https://img.shields.io/badge/Export-PDF%20(jsPDF)%20%7C%20Excel-orange?style=flat-square" alt="Exports" />
+  <img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="MIT License" />
+</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Modern, client-side enterprise payroll management workstation and automated payslip generator built with React 19, TypeScript, Dexie.js (IndexedDB offline database), and Vite.
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🌟 Key Features
 
-## Expanding the Oxlint configuration
+- 📊 **Employee Directory & Salary Management**: Comprehensive staff records, base salary, allowances, deductions, and tax calculation.
+- 💾 **100% Offline & Private**: Powered by Dexie.js (IndexedDB) running entirely on-device with zero server transmission.
+- 📄 **Automated PDF Payslips**: Instant high-resolution payslip document generation powered by `jsPDF`.
+- 📈 **Excel Sheet Exports**: Multi-sheet payroll journal and audit export powered by `exceljs`.
+- 📉 **Analytics Dashboard**: Interactive salary distribution, department expense charts, and payroll trends with `recharts`.
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+---
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+## 🚀 Quick Start
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+---
+
+## 👤 Author & Developer
+
+**Developed by Seng Chhunsour**
+- **GitHub:** [@Chhunsour](https://github.com/Chhunsour)
+- **Repository:** [https://github.com/Chhunsour/Payroll-Management-System.](https://github.com/Chhunsour/Payroll-Management-System.)
+
+---
+
+## 📄 License
+
+Personal and open-source project. Developed by Seng Chhunsour. All rights reserved.

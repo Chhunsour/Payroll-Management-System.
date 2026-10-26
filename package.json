@@ -1,7 +1,8 @@
 {
   "name": "employee-system-payslip",
   "private": true,
-  "version": "0.0.0",
+  "author": "Seng Chhunsour <https://github.com/Chhunsour>",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
